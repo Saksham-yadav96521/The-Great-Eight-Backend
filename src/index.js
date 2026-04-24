@@ -18,15 +18,7 @@ const PORT = Number(process.env.PORT) || 5000;
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
-      // Allow exact match, localhost, or any Vercel preview URL of your frontend
-      if (!origin || origin === clientUrl || origin.includes("localhost") || origin.includes("vercel.app")) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: true,
     credentials: true,
   })
 );
