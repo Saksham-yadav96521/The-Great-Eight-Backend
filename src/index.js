@@ -44,10 +44,13 @@ app.use((err, _req, res, _next) => {
 
 try {
   await connectDb();
-  app.listen(PORT, () => {
-    console.log(`API listening on http://localhost:${PORT}`);
-  });
+  if (process.env.NODE_ENV !== "production") {
+    app.listen(PORT, () => {
+      console.log(`API listening on http://localhost:${PORT}`);
+    });
+  }
 } catch (err) {
   console.error("Server startup failed:", err.message || err);
-  process.exit(1);
 }
+
+export default app;
