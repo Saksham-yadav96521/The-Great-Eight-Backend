@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 import { connectDb } from "./config/db.js";
 import authRoutes from "./routes/auth.js";
@@ -23,7 +24,10 @@ app.use(
 );
 app.use(express.json({ limit: "1mb" }));
 
-const uploadsPath = path.join(process.cwd(), "uploads");
+const uploadsPath = process.env.NODE_ENV === "production" ? "/tmp/uploads" : path.join(process.cwd(), "uploads");
+if (process.env.NODE_ENV === "production" && !fs.existsSync(uploadsPath)) {
+  fs.mkdirSync(uploadsPath, { recursive: true });
+}
 app.use("/uploads", express.static(uploadsPath));
 
 app.use("/api/auth", authRoutes);
