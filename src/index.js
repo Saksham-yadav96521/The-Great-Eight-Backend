@@ -37,6 +37,10 @@ app.use("/api/announcements", announcementRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/info", infoRoutes);
 
+app.get("/", (_req, res) => {
+  res.json({ message: "Welcome to the API" });
+});
+
 app.get("/api/health", (_req, res) => {
   res.json({ ok: true });
 });
